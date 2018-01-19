@@ -2,7 +2,7 @@ module InitCond
 
 use Cdata
 use Avg
-
+use messages 
 implicit none
 private
 public::initff
@@ -13,6 +13,10 @@ namelist /init_cond/&
     force_type
 
 contains
+!***************************************************************
+subroutine read_param_init()
+! 
+endsubroutine read_param_init
 !***************************************************************
 subroutine initff()
 integer :: i,j,q
@@ -38,4 +42,4 @@ endselect
 endsubroutine initff
 !***************************************************************
 
-endmodule
+endmodule InitCond

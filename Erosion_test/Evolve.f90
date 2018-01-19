@@ -15,6 +15,7 @@ module Evolve
   use Sub
   implicit none
   private
+  public :: stream,comp_equilibrium_BGK,collision 
   integer,allocatable,dimension(:) :: iin_pencil
 !------the following are public ------------
 !-------------------------------------------

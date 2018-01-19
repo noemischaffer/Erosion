@@ -7,6 +7,7 @@ module Cdata
   integer,parameter :: labellen=25
   integer,parameter :: qmom = 9 ! we are solving the D2Q9 model
   double precision, dimension(qmom) :: weight
+  integer, dimension(qmom) :: mirrorq 
   double precision, parameter :: wrest=4.0d0/9.0d0, wudlr=1.0d0/9.0d0,wcorner=1.0d0/36.0d0
   integer :: Nx=16
   integer :: Ny=16
@@ -19,9 +20,10 @@ module Cdata
   double precision,allocatable, dimension(:,:,:) :: ff,fftemp,ffEq
   integer, allocatable, dimension(:,:) :: is_solid
   logical::lffaloc=.false.
+  integer :: iTMAX
 !
 namelist /cdata_pars/ &
-     Nx,Ny,Lx,Ly,vunit,tau
+     Nx,Ny,Lx,Ly,vunit,tau,iTMAX
 !
 contains
 !***********************!
@@ -68,6 +70,9 @@ subroutine set_model()
   weight(1)=wcorner; weight(3)=wcorner; weight(7)=wcorner; weight(9)=wcorner
   weight(2)=wudlr ;  weight(4)=wudlr;   weight(6)=wudlr; weight(8)=wudlr
   weight(5)=wrest
+  mirrorq(1)=9;mirrorq(2)=8;mirrorq(3)=7
+  mirrorq(4)=6;mirrorq(5)=5;mirrorq(6)=4
+  mirrorq(7)=3;mirrorq(8)=2;mirrorq(9)=1
 endsubroutine set_model
 !***********************!
 endmodule Cdata
