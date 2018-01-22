@@ -1,4 +1,23 @@
 &cdata_pars
-Nx=32
+  Nx=5
+  Ny=5
+  Lx=6.28318530717958648
+  Ly=6.28318530717958648
+  vunit=1.0
+  tau=1.0
+  iTMAX=10
 /
+&init_cond
+  force_type='static'
+/
+&bc_pars
+  bc_right='periodic'
+  bc_left='periodic'
+  bc_top='noslip'
+  bc_bot='noslip'
+/
+&force_pars
+  iforce='xgravity'
+  famp=1.0
+  gm=1.0
 

@@ -13,7 +13,7 @@ module Cdata
   integer :: Ny=16
   double precision, dimension(2,qmom) :: ee ! unit vectors of the lattice
   integer, dimension(2,qmom) :: ee_int ! integer unit vectors of the lattice  
-  double precision,dimension(2) :: xhat=(1.,0.),yhat=(0.,1.)
+  double precision,dimension(2) :: xhat=[1.,0.],yhat=[0.,1.]
   double precision :: vunit=1.,tau=1.
   double precision :: Lx=2*d_pi,Ly=2*d_pi
   double precision :: dx=1.,dy=1.0
@@ -32,14 +32,16 @@ subroutine rparam_cdata(unit,iostat)
   integer, intent(in) :: unit
   integer, intent(out) :: iostat
   read(unit, NML=cdata_pars, IOSTAT=iostat)
-  dx=Lx/Nx
-  dy=Ly/Ny
+  dx=Lx/dfloat(Nx-1)
+  dy=Ly/dfloat(Ny-1)
 ! the two lines above may change depending on
 ! whether we are using PBC or not along a particular
 ! direction
 endsubroutine rparam_cdata
 !***********************!
 subroutine allocate_cdata()
+allocate(is_solid(Nx+2,Ny+2))
+is_solid=0
 allocate(ff(Nx+2,Ny+2,qmom))
 ff=1.0d0
 allocate(fftemp(Nx+2,Ny+2,qmom))

@@ -14,8 +14,11 @@ namelist /init_cond/&
 
 contains
 !***************************************************************
-subroutine read_param_init()
-! 
+subroutine read_param_init(unit,iostat)
+!read the namelist init_cond
+  integer, intent(in) :: unit
+  integer, intent(out) :: iostat
+  read(unit, NML=init_cond, IOSTAT=iostat) 
 endsubroutine read_param_init
 !***************************************************************
 subroutine initff()
@@ -29,8 +32,9 @@ case('static')
            if(is_solid(i,j).ne.1) then
               if(q.eq.5) then
                 ff(i,j,q) = 1.0d0
-              endif
-              ff(i,j,q) = 0.0d0
+              else
+                ff(i,j,q) = 0.0d0
+              endif 
            endif
         enddo
      enddo

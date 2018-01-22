@@ -16,7 +16,7 @@ module Avg
   implicit none
   private
 !------the following are public ------------
-  public :: allocate_avg,calc_avg,free_avg
+  public :: allocate_avg,calc_avg,free_avg, rwrite_density_uu
   public :: uu,rho
 !-------------------------------------------
   double precision, allocatable, dimension(:,:,:) :: uu
@@ -33,7 +33,7 @@ subroutine allocate_avg()
 endsubroutine allocate_avg
 !***************************************************************
 subroutine calc_avg()
-  integer :: q
+  integer :: q, i,j
   uu=0.;rho=0.
   do q=1,qmom
      uu(:,:,1) = uu(:,:,1)+vunit*ff(2:Nx+1,2:Ny+1,q)*dot2d(ee(:,q),xhat)
@@ -42,7 +42,23 @@ subroutine calc_avg()
   enddo
   uu(:,:,1)=uu(:,:,1)/rho(:,:)
   uu(:,:,2)=uu(:,:,2)/rho(:,:)
+   do i=1, Nx+2
+    do j=1, Ny+2
+  !write(*,*) ff(i,j,5)
+  enddo
+enddo
 endsubroutine calc_avg
+!***************************************************************  
+subroutine rwrite_density_uu()
+!  Reads and registers print parameters
+  !open (11, file='density_velocity.dat',form='unformatted', status='unknown',action='write', access='stream') 
+  open(unit=11, file='density_velocity.txt', action='write', status='replace')
+  !write(11,*) rho(:,1)
+  !write(11,*) rho(1,:)
+  write(11,*) uu(:,:,1)
+  write(11,*) uu(:,:,2)
+  close(11)
+endsubroutine rwrite_density_uu
 !***************************************************************  
 subroutine free_avg()
   if (lavg .eqv. .true.) then
