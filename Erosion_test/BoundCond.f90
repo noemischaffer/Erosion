@@ -4,7 +4,7 @@ use Avg
 use messages
 implicit none
 private
-public :: initialize_bc, set_boundary_before,set_boundary_after
+public :: read_bc, initialize_bc, set_boundary_before,set_boundary_after
 character (len=labellen) :: bc_left='periodic',bc_right='periodic'
 character (len=labellen) :: bc_bot='noslip',bc_top='noslip'
 ! It is left, right, bottom, top
@@ -23,7 +23,6 @@ endsubroutine read_bc
 !***************************************************************
 subroutine initialize_bc()
 ! Boundary types: rb, lb, tb, bb
-  integer :: ibc
   if (bc_left.eq.'periodic') then
     if (bc_right.eq.'periodic') then
       dx=Lx/Nx
@@ -41,21 +40,15 @@ subroutine initialize_bc()
 endsubroutine initialize_bc
 !***************************************************************
 subroutine set_boundary_before()
-  integer :: i,q,m,n,qnext
   integer,dimension(3) :: qq 
-  integer :: ibc
 
 !
 ! left boundary
 !
   select case(bc_left)
      case('periodic')
-     ! write(*,*) 'periodic x'
       ff(Nx+2,:,:)=ff(2,:,:)
       ff(1,:,:)=ff(Nx+1,:,:)
-     ! write(*,*) ff(Nx+2,4,4),ff(2,4,4)
-     ! write(*,*) ff(1,4,4),ff(Nx+1,4,4)
-     ! write(*,*) '***********'
      case default
        call fatal_error('boundary before','nothing other than pbc coded') 
   endselect
@@ -76,7 +69,7 @@ subroutine set_boundary_before()
     qq=[1,2,3]
     call noslipy_before(qq,1)
   case default
-      call fatal_error('boundary before','bc not found')
+    call fatal_error('boundary before','bc not found')
   endselect
 !
 ! top boundary
@@ -86,7 +79,7 @@ subroutine set_boundary_before()
      qq=[7,8,9]
      call noslipy_before(qq,Ny+2)
   case default
-      call fatal_error('boundary before','bc not found')
+     call fatal_error('boundary before','bc not found')
   endselect
 
 endsubroutine set_boundary_before
@@ -110,7 +103,7 @@ subroutine noslipy_before(qarray,jy)
       ff(i,jy,q)=ff(m,n,q)
     enddo
   enddo
-  i=Nx+1
+  i=Nx+2
   do iq=1,2
     q=qarray(iq)
     m=i-ee_int(1,q)
@@ -131,7 +124,7 @@ subroutine set_boundary_after()
     qq=[1,2,3]
     call noslipy_after(qq,1)
   case default
-      call fatal_error('boundary after','bc not found')
+     call fatal_error('boundary after','bc not found')
   endselect
 !
 ! top boundary
@@ -141,7 +134,7 @@ subroutine set_boundary_after()
      qq=[7,8,9]
      call noslipy_after(qq,Ny+2)
     case default
-      call fatal_error('boundary after','bc not found')
+     call fatal_error('boundary after','bc not found')
   endselect
 
 endsubroutine set_boundary_after

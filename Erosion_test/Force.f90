@@ -16,8 +16,8 @@ module Force
   use Sub
   implicit none
   private
-  public :: get_ueq
-  character (len=labellen) :: iforce='none'
+  public :: get_ueq, read_fpars
+  character (len=labellen) :: iforce='xgravity'
   double precision :: famp=1.0d0, gm=1.0d0
   namelist /force_pars/ &
      iforce,famp,gm

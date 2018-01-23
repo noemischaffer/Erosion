@@ -7,10 +7,10 @@ implicit none
 private
 public::initff
 
-character (len=labellen) :: force_type='static'
+character (len=labellen) :: init_type='static'
 
 namelist /init_cond/& 
-    force_type
+    init_type
 
 contains
 !***************************************************************
@@ -24,7 +24,7 @@ endsubroutine read_param_init
 subroutine initff()
 integer :: i,j,q
 
-select case (force_type)
+select case (init_type)
 case('static')
   do q=1,qmom
      do j=2,Ny+1

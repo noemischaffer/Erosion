@@ -13,10 +13,10 @@ module Cdata
   integer :: Ny=16
   double precision, dimension(2,qmom) :: ee ! unit vectors of the lattice
   integer, dimension(2,qmom) :: ee_int ! integer unit vectors of the lattice  
-  double precision,dimension(2) :: xhat=[1.,0.],yhat=[0.,1.]
-  double precision :: vunit=1.,tau=1.
-  double precision :: Lx=2*d_pi,Ly=2*d_pi
-  double precision :: dx=1.,dy=1.0
+  double precision,dimension(2) :: xhat=[1.0d0,0.0d0],yhat=[0.0d0,1.0d0]
+  double precision :: vunit=1.0d0,tau=1.0d0
+  double precision :: Lx=2.0d0*d_pi,Ly=2.0d0*d_pi
+  double precision :: dx=1.0d0,dy=1.0d0
   double precision,allocatable, dimension(:,:,:) :: ff,fftemp,ffEq
   integer, allocatable, dimension(:,:) :: is_solid
   logical::lffaloc=.false.

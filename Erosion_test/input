@@ -5,19 +5,19 @@
   Ly=6.28318530717958648
   vunit=1.0
   tau=1.0
-  iTMAX=10
+  iTMAX=3
 /
 &init_cond
-  force_type='static'
+  init_type='static'
 /
 &bc_pars
-  bc_right='periodic'
   bc_left='periodic'
-  bc_top='noslip'
+  bc_right='periodic'
   bc_bot='noslip'
+  bc_top='noslip'
 /
 &force_pars
   iforce='xgravity'
-  famp=1.0
-  gm=1.0
+  famp=0.1
+  gm=0.1
 

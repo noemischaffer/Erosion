@@ -39,14 +39,19 @@ subroutine calc_avg()
      uu(:,:,1) = uu(:,:,1)+vunit*ff(2:Nx+1,2:Ny+1,q)*dot2d(ee(:,q),xhat)
      uu(:,:,2) = uu(:,:,2)+vunit*ff(2:Nx+1,2:Ny+1,q)*dot2d(ee(:,q),yhat)
      rho(:,:) = rho(:,:) + ff(2:Nx+1,2:Ny+1,q)
+     !write(*,*) rho(:,:)
   enddo
   uu(:,:,1)=uu(:,:,1)/rho(:,:)
   uu(:,:,2)=uu(:,:,2)/rho(:,:)
-   do i=1, Nx+2
-    do j=1, Ny+2
-  !write(*,*) ff(i,j,5)
+   do i=1, Nx
+    do j=1, Ny
+   !  write(*,*) '********',i,j
+   !  write(*,*) rho(i,j) 
+   !  write(*,*) uu(i,j,1), uu(i,j,2) 
+    !  write(*,*) ff(i,j,8), i ,j
+   !   write(*,*) '********'
+    enddo
   enddo
-enddo
 endsubroutine calc_avg
 !***************************************************************  
 subroutine rwrite_density_uu()
@@ -55,6 +60,8 @@ subroutine rwrite_density_uu()
   open(unit=11, file='density_velocity.txt', action='write', status='replace')
   !write(11,*) rho(:,1)
   !write(11,*) rho(1,:)
+  write(11,*) Nx
+  write(11,*) Ny
   write(11,*) uu(:,:,1)
   write(11,*) uu(:,:,2)
   close(11)
