@@ -25,11 +25,12 @@ do it=1,iTMAX
   call set_boundary_before()
   call stream() 
   call calc_avg()
-  call rwrite_density_uu()
+!  call rwrite_density_uu()
   call comp_equilibrium_BGK()
-  call set_boundary_after()
   call collision()
+  call set_boundary_after()
 enddo
+  call rwrite_density_uu()
 call free_avg()
 call free_cdata()
 endprogram lbm

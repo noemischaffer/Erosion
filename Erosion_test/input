@@ -5,7 +5,7 @@
   Ly=6.28318530717958648
   vunit=1.0
   tau=1.0
-  iTMAX=3
+  iTMAX=4
 /
 &init_cond
   init_type='static'
@@ -19,5 +19,5 @@
 &force_pars
   iforce='xgravity'
   famp=0.1
-  gm=0.1
+  gm=0.001
 

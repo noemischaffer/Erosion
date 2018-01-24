@@ -38,6 +38,10 @@ subroutine stream()
            if(is_solid(i,j).ne.1) then
               iin=i-ee_int(1,q)
               fftemp(i,j,q) = ff(iin,jin,q)
+              !write(*,*) fftemp(i,j,q), i, j, q
+              !write(*,*) '***************************'
+              !write(*,*) ff(iin, jin, q), iin, jin, q
+              !write(*,*) '************new step*************'
            endif
         enddo
      enddo
@@ -54,13 +58,17 @@ subroutine comp_equilibrium_BGK()
      do j=2,Ny+1
         do i=2,Nx+1
            if(is_solid(i,j).ne.1) then
-              call get_ueq(uu(i,j,:),rho(i,j),ueq)
+              call get_ueq(uu(i-1,j-1,:),rho(i-1,j-1),ueq)
               edotu=dot2d(ee(:,q),ueq)
               usqr=dot2d(ueq,ueq)
-              ffEq(i,j,q) = weight(q)*rho(i,j)*(1.+3.*edotu/(vunit**2) &
+              ffEq(i,j,q) = weight(q)*rho(i-1,j-1)*(1.+3.*edotu/(vunit**2) &
                                        +(9./2.)*(edotu**2)/(vunit**4) &
                                        -(3./2.)*usqr/(vunit**2) &
                )
+               !write(*,*) ffEq(i,j,q), i,j,q
+               !write(*,*) '*********ueq*******'
+               !write(*,*) ueq
+               !write(*,*) '****************'
            endif
         enddo
      enddo

@@ -1,5 +1,5 @@
 #FC= /opt/local/bin/gfortran-mp-6
-FC= gfortran
+FC= gfortran -fbounds-check
 FO=-c -g
 default:
 	$(FC) $(FO) sub.f90 -o sub.o 

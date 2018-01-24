@@ -13,7 +13,9 @@ readf,1,uux
 readf,1,uuy
 print, Nx
 x=[0,Nx]
-parabola=plot(x, uux, xtitle='!8x', ytitle='!8u!D!8x')
+y=[0,Nx]
+print,uux[Nx/2,*,0]
+parabola=plot(y, uux[*,Nx/2,0], xtitle='!8x', ytitle='!8u!D!8x')
 close,1
 end
 

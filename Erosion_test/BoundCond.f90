@@ -47,6 +47,7 @@ subroutine set_boundary_before()
 !
   select case(bc_left)
      case('periodic')
+      write(*,*) 'applying pbc'
       ff(Nx+2,:,:)=ff(2,:,:)
       ff(1,:,:)=ff(Nx+1,:,:)
      case default
@@ -66,6 +67,7 @@ subroutine set_boundary_before()
     ff(:,Ny+2,:)=ff(:,2,:)
     ff(:,1,:)=ff(:,Ny+1,:)
   case('noslip')
+    write(*,*) 'applying noslip before bot'
     qq=[1,2,3]
     call noslipy_before(qq,1)
   case default
@@ -76,6 +78,7 @@ subroutine set_boundary_before()
 !
   select case(bc_top)
     case('noslip')
+     write(*,*) 'applying noslip before top'
      qq=[7,8,9]
      call noslipy_before(qq,Ny+2)
   case default
@@ -89,11 +92,15 @@ subroutine noslipy_before(qarray,jy)
   integer, intent(in) :: jy 
   integer :: i,q,m,n,qnext,iq
   i=1
-  do iq=2,3
+  do iq=1,2
     q=qarray(iq)
     m=i-ee_int(1,q)
     n=jy-ee_int(2,q)
     ff(i,jy,q)=ff(m,n,q)
+    !write(*,*) ff(i,jy,q), i, jy, q
+    !write(*,*) '****************'
+    !write(*,*) ff(m,n,q), m, n, q
+    !write(*,*) '*******new step********'
   enddo
   do i=2,Nx+1
     do iq=1,3
@@ -101,14 +108,22 @@ subroutine noslipy_before(qarray,jy)
       m=i-ee_int(1,q)
       n=jy-ee_int(2,q)
       ff(i,jy,q)=ff(m,n,q)
+  !    write(*,*) ff(i,jy,q), i, jy, q
+  !    write(*,*) '****************'
+  !    write(*,*) ff(m,n,q), m, n, q
+  !    write(*,*) '*******new step********'
     enddo
   enddo
   i=Nx+2
-  do iq=1,2
+  do iq=2,3
     q=qarray(iq)
     m=i-ee_int(1,q)
     n=jy-ee_int(2,q)
     ff(i,jy,q)=ff(m,n,q)
+    !write(*,*) ff(i,jy,q), i, jy, q
+    !write(*,*) '****************'
+    !write(*,*) ff(m,n,q), m, n, q
+    !write(*,*) '*******new step********'
   enddo
 
 endsubroutine noslipy_before
@@ -121,6 +136,7 @@ subroutine set_boundary_after()
 !
   select case(bc_bot)
   case('noslip')
+    write(*,*) 'applying noslip after bot'
     qq=[1,2,3]
     call noslipy_after(qq,1)
   case default
@@ -131,6 +147,7 @@ subroutine set_boundary_after()
 !
   select case(bc_top)
     case('noslip')
+    write(*,*) 'applying noslip after top'
      qq=[7,8,9]
      call noslipy_after(qq,Ny+2)
     case default
@@ -144,23 +161,35 @@ subroutine noslipy_after(qarray,jy)
   integer, intent(in) :: jy
   integer :: i,q,p,iq
   i=1
-  do iq=2,3
+  do iq=1,2
     q=qarray(iq)
     p=mirrorq(q)
     ff(i,jy,p)=ff(i,jy,q)
+    !write(*,*) ff(i,jy,p), i, jy, p
+    !write(*,*) '***************'
+    !write(*,*) ff(i,jy,q), i, jy, q
+    !write(*,*) '**********new step**********'
   enddo
   do i=2,Nx+1
     do iq=1,3
       q=qarray(iq)
       p=mirrorq(q)
       ff(i,jy,p)=ff(i,jy,q)
+   ! write(*,*) ff(i,jy,p), i, jy, p
+   ! write(*,*) '***************'
+   ! write(*,*) ff(i,jy,q), i, jy, q
+   ! write(*,*) '**********new step**********'
     enddo
   enddo
   i=Nx+2
-  do iq=1,2
+  do iq=2,3
     q=qarray(iq)
     p=mirrorq(q)
     ff(i,jy,p)=ff(i,jy,q)
+    !write(*,*) ff(i,jy,p), i, jy, p
+    !write(*,*) '***************'
+    !write(*,*) ff(i,jy,q), i, jy, q
+    !write(*,*) '**********new step**********'
   enddo
 endsubroutine noslipy_after
 !***************************************************************

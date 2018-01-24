@@ -39,7 +39,7 @@ subroutine calc_avg()
      uu(:,:,1) = uu(:,:,1)+vunit*ff(2:Nx+1,2:Ny+1,q)*dot2d(ee(:,q),xhat)
      uu(:,:,2) = uu(:,:,2)+vunit*ff(2:Nx+1,2:Ny+1,q)*dot2d(ee(:,q),yhat)
      rho(:,:) = rho(:,:) + ff(2:Nx+1,2:Ny+1,q)
-     !write(*,*) rho(:,:)
+    ! write(*,*) rho(:,:)
   enddo
   uu(:,:,1)=uu(:,:,1)/rho(:,:)
   uu(:,:,2)=uu(:,:,2)/rho(:,:)
@@ -47,8 +47,9 @@ subroutine calc_avg()
     do j=1, Ny
    !  write(*,*) '********',i,j
    !  write(*,*) rho(i,j) 
-   !  write(*,*) uu(i,j,1), uu(i,j,2) 
-    !  write(*,*) ff(i,j,8), i ,j
+   !  write(*,*) 'ux', uu(i,j,1) 
+   !  write(*,*) 'uy', uu(i,j,2) 
+   !   write(*,*) ff(i,j,8), i ,j
    !   write(*,*) '********'
     enddo
   enddo
